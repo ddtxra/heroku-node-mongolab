@@ -4,8 +4,8 @@ var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
  
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('simple', server);
+var server = new Server('ds037488.mongolab.com', 37488, {auto_reconnect: true});
+db = new Db('heroku_app17247395', server);
  
 db.open(function(err, db) {
     if(!err) {
