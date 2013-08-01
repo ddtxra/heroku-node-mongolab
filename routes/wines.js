@@ -1,5 +1,6 @@
 var mongo = require('mongodb');
- 
+var user = 'dan';
+var key = 'lol';
 var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
@@ -7,17 +8,20 @@ var Server = mongo.Server,
 var server = new Server('ds037488.mongolab.com', 37488, {auto_reconnect: true});
 db = new Db('heroku_app17247395', server);
  
-db.open(function(err, db) {
+db.open(function(err, client) {
+    client.authenticate(user, key, function(err, success){
     if(!err) {
         console.log("Connected to 'winedb' database");
         db.collection('wines', {strict:true}, function(err, collection) {
-            if (err) {
-                console.log("The 'wines' collection doesn't exist. Creating it with sample data...");
-                populateDB();
-            }
+        if (err) {
+             console.log("The 'wines' collection doesn't exist. Creating it with sample data...");
+             // populateDB();
+	    }
         });
     }
+    });
 });
+
  
 exports.findById = function(req, res) {
     var id = req.params.id;
